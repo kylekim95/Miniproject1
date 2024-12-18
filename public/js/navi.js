@@ -19,18 +19,20 @@ window.addNewNote = async function addNewNote(parent) {
   location = `/app/${data.id}`;
 };
 
-function renderMenuList(list) {
+function renderMenuList(id, list) {
   let items = "";
+  let isOpenCollapse = false;
 
   list.forEach((e) => {
+    const { isOpen, child } = renderMenuList(id, e.documents);
+    isOpenCollapse = isOpenCollapse || isOpen || e.id.toString() === id;
+
     items += `<li onclick="location='/app/${
       e.id
     }'" class="btn btn-outline-light overflow-x-hidden overflow-y-hidden text-black d-block rounded border-0 text-start d-flex justify-content-between" style="height: 30px;">
       <div><span type="button" id="collapse" data-bs-toggle="collapse" data-bs-target='#collapse${
         e.id
-      }' aria-expanded='false' aria-controls='collapse${
-      e.id
-    }' onclick="event.stopPropagation();">
+      }' aria-controls='collapse${e.id}' onclick="event.stopPropagation();">
         <i class="fa-regular fa-note-sticky" style="color: #4f4f4f;"></i>
       </span>
       ${e.title}
@@ -41,12 +43,12 @@ function renderMenuList(list) {
         <i class="fa-solid fa-plus" style="color: #4f4f4f;"></i>
       </button>
     </li>
-    <div class="collapse ps-2" id='collapse${e.id}'>${renderMenuList(
-      e.documents
-    )}</div>`;
+    <div class="collapse ps-2 ${isOpen ? "show" : ""}" id='collapse${
+      e.id
+    }'>${child}</div>`;
   });
 
-  return items;
+  return { isOpen: isOpenCollapse, child: items };
 }
 
 async function render(path, query) {
@@ -81,7 +83,7 @@ async function render(path, query) {
   }
   const data = await response.json();
 
-  const body = renderMenuList(data);
+  const body = renderMenuList(path.split("/app/")[1], data).child;
 
   return header + body + end;
 }
