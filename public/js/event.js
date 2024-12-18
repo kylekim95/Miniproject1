@@ -25,6 +25,7 @@ const event = () => {
       e.stopPropagation();
       function mousemoveHandler(e){
         let limit = Math.min(Math.max(e.clientX, 180), 360);
+        document.body.style.cursor = 'ew-resize';
         left.style.setProperty('width', `${limit}px`);
         e.preventDefault();
         e.stopPropagation();
