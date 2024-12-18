@@ -96,7 +96,7 @@ async function deleteEvent(){
 
   if (response.status === 200 && data?.id > 0) {
     alert("삭제 되었습니다.");
-    location.href = "http://localhost:3000";
+    navigater("/")
   }else{
     alert("삭제에 실패하였습니다.");
   }
