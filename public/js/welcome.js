@@ -59,7 +59,7 @@ async function render(path, query){
         <h2 class="fw-semibold text-center mb-4">${userName}님, 안녕하세요.</h2>
         <div class="my-4">
           <p class="fs-6"><i class="bi bi-clock-history fs-6"></i> <span class="ms-1">최근 파일</span></p>
-          <div class="row gap-2">
+          <div class="d-flex gap-2">
           ${
             latestDocs.map((doc, idx)=>{
               return `
