@@ -30,25 +30,26 @@ async function render(data) {
     case traverse.length <= maxPathSize:
       traverse.slice(0, -1).forEach((e)=>{
         content += `<li class="breadcrumb-item">
-                      <div class="pe-auto" onclick="history.pushState(null, null, '/app/${e.id}'); window.route();">${(e.title.length > 10 ? e.title.slice(0, 10) : e.title)}</div>
+                      <div class="pe-auto" onclick="location='${(e.id === -1 ? '/' : '/app/'+e.id)}'">${(e.title.length > 10 ? e.title.slice(0, 10) : e.title)}</div>
                     </li>`;
       });
       break;
     case traverse.length > maxPathSize:
       traverse.slice(0, 2).forEach((e)=>{
         content += `<li class="breadcrumb-item">
-                      <div class="pe-auto" onclick="history.pushState(null, null, '/app/${e.id}'); window.route();">${(e.title.length > 10 ? e.title.slice(0, 10) : e.title)}</div>
+                      <div class="pe-auto" onclick="location='${(e.id === -1 ? '/' : '/app/'+e.id)}'">${(e.title.length > 10 ? e.title.slice(0, 10) : e.title)}</div>
                     </li>`;
       });
       content += `<li class="breadcrumb-item">...</li>`;
       traverse.slice(-2, -1).forEach((e)=>{
         content += `<li class="breadcrumb-item">
-                      <div class="pe-auto" onclick="history.pushState(null, null, '/app/${e.id}'); window.route();">${(e.title.length > 10 ? e.title.slice(0, 10) : e.title)}</div>
+                      <div class="pe-auto" onclick="location='${(e.id === -1 ? '/' : '/app/'+e.id)}'">${(e.title.length > 10 ? e.title.slice(0, 10) : e.title)}</div>
                     </li>`;
       });
       break;
   }
   content += `<li class="breadcrumb-item active fw-bold" aria-current="page">${traverse.at(-1).title}</li>`;
+
 
   return header + content + footer;
 }
