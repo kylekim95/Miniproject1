@@ -1,46 +1,42 @@
 // event.js
 
-const event = ()=> {
-  window.addEventListener("click", e =>{
+const event = () => {
+  window.addEventListener("click", (e) => {
     console.log(e.target);
-    if(e.target.matches("#save")){
+    if (e.target.matches("#save")) {
       saveEvent();
-    }
-    else if(e.target.matches("#write") || e.target.matches("#write1")){
+    } else if (e.target.matches("#write") || e.target.matches("#write1")) {
       writeEvent();
-    }
-    else if(e.target.matches("#delete")){
+    } else if (e.target.matches("#delete")) {
       deleteEvent();
-    }
-    else if(e.target.matches("#close")){
+    } else if (e.target.matches("#close")) {
       navCollapse();
-    }
-    else if(e.target.matches("#nav-expand")){
+    } else if (e.target.matches("#nav-expand")) {
       navExpand();
     }
-  })
-  const writeObserver = new MutationObserver(()=>{
-    const contents = document.querySelectorAll('blockquote');
-    if(contents){
-      contents.forEach((content)=>{
-        content.addEventListener("blur",()=>{
-          console.log('observing');
+  });
+  const writeObserver = new MutationObserver(() => {
+    const contents = document.querySelectorAll("blockquote");
+    if (contents) {
+      contents.forEach((content) => {
+        content.addEventListener("blur", () => {
+          console.log("observing");
           autoSaveEvent();
         });
-      })
+      });
     }
   });
-  writeObserver.observe(document.body,{childList:true, subtree:true});
-}
+  writeObserver.observe(document.body, { childList: true, subtree: true });
+};
 
-function navCollapse(){
+function navCollapse() {
   const navi = document.getElementById("navi");
   navi.classList.add("d-none");
   const navExpand = document.getElementById("nav-expand");
   navExpand.classList.remove("d-none");
   navExpand.classList.add("d-block");
 }
-function navExpand(){
+function navExpand() {
   const navi = document.getElementById("navi");
   navi.classList.remove("d-none");
   const navExpand = document.getElementById("nav-expand");
@@ -48,11 +44,13 @@ function navExpand(){
   navExpand.classList.remove("d-block");
 }
 
-async function saveEvent(){
+async function saveEvent() {
   const newid = document.getElementById("did").innerHTML.trim();
   const title = document.getElementById("title").innerHTML.trim();
   const contents = document.getElementById("contents").innerHTML.trim();
-  const replaceContents = contents.replaceAll("<div>","").replaceAll("</div>","<br>");
+  const replaceContents = contents
+    .replaceAll("<div>", "")
+    .replaceAll("</div>", "<br>");
 
   const response = await fetch(`http://localhost:3001/document/${newid}`);
   let data;
@@ -65,37 +63,44 @@ async function saveEvent(){
     const response = await fetch(`http://localhost:3001/document/${newid}`, {
       method: "PUT",
       // headers: {"Content-Type": "application/json",},
-      body:JSON.stringify({id:newid,title:title,content:replaceContents})
+      body: JSON.stringify({
+        id: newid,
+        title: title,
+        content: replaceContents,
+      }),
     });
 
-    if(response.ok){
+    if (response.ok) {
       alert("업데이트 성공!");
       location.href = "http://localhost:3000/app/" + newid;
-    }else{
+    } else {
       alert("업데이트에 실패하였습니다.");
     }
   } else {
     // post
-    const response = await fetch(`http://localhost:3001/document/`,{
-      method:"POST",
+    const response = await fetch(`http://localhost:3001/document/`, {
+      method: "POST",
       // headers:{"Content-Type": "application/json"},
-      body:JSON.stringify({id:newid,title:title,content:replaceContents})
+      body: JSON.stringify({
+        id: newid,
+        title: title,
+        content: replaceContents,
+      }),
     });
-    if(response.ok){
+    if (response.ok) {
       alert("등록 성공!");
       location.href = "http://localhost:3000/app/" + newid;
-    }else{
+    } else {
       alert("등록에 실패하였습니다.");
     }
   }
 }
 
 async function autoSaveEvent() {
-
-  const savingUI = document.getElementById('savingStatus');
+  const savingUI = document.getElementById("savingStatus");
 
   // UI에 "저장 중" 표시
-  savingUI.classList.remove('d-none');
+  savingUI.classList.remove("d-none");
 
   async function saving(id, obj) {
     try {
@@ -112,32 +117,30 @@ async function autoSaveEvent() {
     } finally {
       // UI에서 "저장 중" 표시 제거
       setTimeout(() => {
-        savingUI.classList.add('d-none');
+        savingUI.classList.add("d-none");
       }, 600);
     }
   }
   saving();
-
 }
 
-function writeEvent(){
-  location.href = "/app/";
+function writeEvent() {
+  window.addNewNote(null);
 }
 
-async function deleteEvent(){
+async function deleteEvent() {
   const deleteId = document.getElementById("did").innerHTML.trim();
 
   const response = await fetch(`http://localhost:3001/document/${deleteId}`, {
-      method: "DELETE",
+    method: "DELETE",
   });
 
-  if (response.ok){
+  if (response.ok) {
     alert("삭제 되었습니다.");
     location.href = "http://localhost:3000/app/";
-  }else{
+  } else {
     alert("삭제에 실패하였습니다.");
   }
 }
-
 
 export default event;
