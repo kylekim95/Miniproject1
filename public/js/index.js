@@ -35,5 +35,10 @@ const render = async (path = "", query= "") => {
   }
 };
 
+window.navigater = function(path){
+  history.pushState(null,null,path)
+  render(path, location.serch);
+}
+
 render($path, $query);
 event();

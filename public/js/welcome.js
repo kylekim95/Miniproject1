@@ -63,11 +63,14 @@ async function render(path, query){
           <div class="row gap-2">
           ${
             latestDocs.map((doc, idx)=>{
-              return `<div class="list border rounded-2 p-3 col">
-                <h6 class="text-truncate">${doc.title}</h6>
-                <p class="mb-1 fs-6 fw-light lh-sm">${doc.content}</p>
-                <span class="updated">${updateTimeCalc(doc.updatedAt)}</span>
-              </div>`
+              return `
+              <a onclick=navigater('/app/${doc.id}') class="list border rounded-2 p-3 col">
+                <div>
+                  <h6 class="text-truncate">${doc.title}</h6>
+                  <p class="mb-1 fs-6 fw-light lh-sm">${doc.content}</p>
+                  <span class="updated">${updateTimeCalc(doc.updatedAt)}</span>
+                </div>
+              </a>`
             }).join("")
           }
           </div>
