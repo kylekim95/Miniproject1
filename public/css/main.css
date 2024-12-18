@@ -1,0 +1,8 @@
+.main {
+  overflow-y: auto; height: 100%;
+}
+
+.navi{
+  height: 100vh; overflow-y: auto;
+}
+
