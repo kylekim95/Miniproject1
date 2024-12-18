@@ -3,9 +3,7 @@ import axiosInstance from "./axiosInstance.js";
 
 const event = () => {
   window.addEventListener("click", (e) => {
-    if (e.target.matches("#save")) {
-      saveEvent();
-    } else if (e.target.matches("#write") || e.target.matches("#write1")) {
+    if (e.target.matches("#write") || e.target.matches("#write1")) {
       writeEvent();
     } else if (e.target.matches("#delete")) {
       deleteEvent();
@@ -118,13 +116,10 @@ async function autoSaveEvent() {
     content: replaceContents,
   });
   try {
-    const response = await axiosInstance.put(
+    await axiosInstance.put(
       `/documents/${currentId}`,
       jsonData
     );
-    if (response.data.username !== "sajotuna") {
-      const tmp = JSON.stringify({ ...jsonData, id: currentId + 103 });
-    }
   } catch (error) {
     console.log(error);
   } finally {
