@@ -37,7 +37,7 @@ function renderMenuList(id, list) {
           <i class="fa-regular fa-note-sticky" style="color: #5f5e5b;"></i>
           <i class="fa-solid fa-chevron-down" style="color: #5f5e5b; width: 14px; font-size: small;"></i>
         </span>
-        ${e.title}
+        <span id="${e.id}">${e.title}</span>
       </div>
       <div class="d-flex document-control-btn">
         <button class="btn btn-outline-light d-block rounded border-0 py-0 px-1" onclick="event.stopPropagation(); deleteNote(${

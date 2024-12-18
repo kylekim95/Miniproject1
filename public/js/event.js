@@ -18,6 +18,13 @@ const event = () => {
       navigater(`/app/${e.target.dataset.id}`);
     }
   });
+
+  window.addEventListener("input", (e) => {
+    if (e.target.matches("#title")) {
+      changeTitle(e)
+    }
+  })
+
   const writeObserver = new MutationObserver(() => {
     const contents = document.querySelectorAll("blockquote");
     if (contents) {
@@ -47,6 +54,15 @@ function navExpand() {
   navExpand.classList.remove("d-block");
 }
 
+function changeTitle(e) {
+  const breadcrumbTitle = document.getElementById("breadcrumbTitle");
+  const currentId = document.getElementById("did").innerHTML.trim();
+  const navTitle = document.getElementById(`${currentId}`);
+  const text = document.getElementById("text");
+  navTitle.textContent = e.target.textContent;
+  breadcrumbTitle.textContent = e.target.textContent;
+}
+
 async function autoSaveEvent() {
   const savingUI = document.getElementById('savingStatus');
 
@@ -59,10 +75,7 @@ async function autoSaveEvent() {
   const replaceContents = contents.replaceAll("<div>","").replaceAll("</div>","<br>");
   const jsonData = JSON.stringify({id:currentId,title:title,content:replaceContents});
   try{
-    const response = await axiosInstance.put(`/documents/${currentId}`,jsonData);
-    if(response.data.username !== 'sajotuna'){
-      const tmp = JSON.stringify({...jsonData,id: currentId + 103});
-    }
+    await axiosInstance.put(`/documents/${currentId}`,jsonData);
   } catch (error) {
     console.log(error);
   } finally {
@@ -84,7 +97,7 @@ async function deleteEvent(){
 
   if (response.status === 200 && data?.id > 0) {
     alert("삭제 되었습니다.");
-    location.href = "http://localhost:3000/app/";
+    location.href = "http://localhost:3000";
   }else{
     alert("삭제에 실패하였습니다.");
   }

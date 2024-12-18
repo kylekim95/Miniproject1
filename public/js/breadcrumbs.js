@@ -51,7 +51,7 @@ async function render(data) {
       });
       break;
   }
-  content += `<li class="breadcrumb-item active fw-bold" aria-current="page">${traverse.at(-1).title}</li>`;
+  content += `<li id="breadcrumbTitle" class="breadcrumb-item active fw-bold" aria-current="page">${traverse.at(-1).title}</li>`;
 
 
   return header + content + footer;
