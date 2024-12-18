@@ -21,3 +21,8 @@
 .item-container:hover > div > #collapse > *:last-child {
   display: block;
 }
+
+button#write{
+  background: var(--bg-gray);
+  &:hover{background:var(--bg-hover)}
+}
