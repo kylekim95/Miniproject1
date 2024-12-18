@@ -28,9 +28,8 @@ function renderMenuList(id, list) {
     const { isOpen, child } = renderMenuList(id, e.documents);
     isOpenCollapse = isOpenCollapse || isOpen || e.id.toString() === id;
 
-    items += `<li onclick="location='/app/${
-      e.id
-    }'" class="item-container btn btn-outline-light overflow-x-hidden overflow-y-hidden text-black d-block rounded border-0 text-start d-flex justify-content-between pe-1" style="height: 30px;">
+    items += `<li onclick="navigater('/app/${e.id}');"
+     class="item-container btn btn-outline-light overflow-x-hidden overflow-y-hidden text-black d-block rounded border-0 text-start d-flex justify-content-between pe-1" style="height: 30px;">
       <div>
         <span type="button" id="collapse" data-bs-toggle="collapse" data-bs-target='#collapse${
           e.id
@@ -38,7 +37,7 @@ function renderMenuList(id, list) {
           <i class="fa-regular fa-note-sticky" style="color: #5f5e5b;"></i>
           <i class="fa-solid fa-chevron-down" style="color: #5f5e5b; width: 14px; font-size: small;"></i>
         </span>
-        ${e.title}
+        <span id="${e.id}">${e.title}</span>
       </div>
       <div class="d-flex document-control-btn">
         <button class="btn btn-outline-light d-block rounded border-0 py-0 px-1" onclick="event.stopPropagation(); deleteNote(${
@@ -65,10 +64,10 @@ async function render(path, query) {
   const header = `<div>
         <div class="row">
           <div class="col-8">
-            <a href="/" class="link-body-emphasis text-decoration-none">
+            <div class="link-body-emphasis text-decoration-none" onclick="navigater('/');" style="cursor:pointer;">
               <i class="fa-solid fa-book me-2"></i>
               <span class="fs-5 fw-semibold">Notepad</span>
-            </a>
+            </div>
           </div>
           <div class="col-4">
             <div class="row">

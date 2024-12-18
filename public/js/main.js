@@ -35,9 +35,7 @@ async function body(data) {
   <div class="m-3 mt-5 ps-5 pe-5" style="overflow-y: auto; height: 100%;"  >
       <!-- 제목 -->
       <div class="mb-3">
-        <blockquote id="title" class="h2 p-1 fw-semibold" contenteditable="true">
-          ${data.title}
-        </blockquote>
+        <blockquote id="title" class="h2 p-1 fw-semibold" contenteditable="true">${data.title}</blockquote>
       </div>
       <!-- 컨텐츠 -->
       <div>
