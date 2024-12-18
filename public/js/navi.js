@@ -3,16 +3,21 @@
 async function render(path, query) {
   const header = `<div>
         <div class="row">
-          <div class="col-7 ">
+          <div class="col-6 ">
             <a href="/" class="link-body-emphasis text-decoration-none">
               <i class="fa-solid fa-book me-2"></i>
               <span class="fs-5 fw-semibold">Notepad</span>
             </a>
           </div>
-          <div class="col-5 ">
+          <div class="col-4 ">
             <button id="write" class="btn btn-outline-light text-black d-block rounded border-0 " style="font-size: small;">
               <i class="fa-sharp fa-regular fa-pen-to-square" style="color: #4f4f4f;"></i>
               쓰기
+            </button>
+          </div>
+          <div class="col-1 ">
+            <button id="nav-collapse" class="btn btn-outline-light text-black d-block rounded border-0 " style="font-size: small;">
+              <<
             </button>
           </div>
         </div>

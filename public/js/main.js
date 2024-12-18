@@ -1,5 +1,6 @@
 // main.js
 import breadcrumb from "./breadcrumbs.js";
+import mainHeader from "./mainHeader.js";
 
 async function render(path = "", query) {
   const pathArr = path.split("/");
@@ -22,25 +23,9 @@ async function render(path = "", query) {
 }
 
 async function body(data) {
-  let _breadcrumb = await breadcrumb(data);
-
-  return `
-  <div class="flex-shrink-1" >
-    <div id="did" class="d-none">${data.id}</div>
-    <!-- top menu -->
-    <div class="container-fluid align-items-center d-flex">
-      ${_breadcrumb}
-
-      <div id="save" class="btn btn-outline-light text-black ms-auto">
-        <i class="fa-regular fa-floppy-disk"></i>
-      </div>
-
-      <div id="delete" class="btn btn-outline-light text-black me-1">
-        <i class="fa-solid fa-trash"></i>
-      </div>
-
-    </div>` + 
-    `<div class="m-3 mt-5 ps-5 pe-5" style="overflow-y: auto; height: 100%;"  >
+  let pre_main = `<div class="flex-shrink-1" > <div id="did" class="d-none">${data.id}</div>`;
+  let post_main = `
+  <div class="m-3 mt-5 ps-5 pe-5" style="overflow-y: auto; height: 100%;">
       <!-- 제목 -->
       <div class="mb-3">
         <blockquote id="title" class="h2 p-1 fw-semibold" contenteditable="true">
@@ -55,7 +40,10 @@ async function body(data) {
       </div>
       </div>
     </div>
-   </div>`;
+  </div>`;
+  let header = await mainHeader(data);
+
+  return pre_main + header + post_main;
 }
 
 export default render;

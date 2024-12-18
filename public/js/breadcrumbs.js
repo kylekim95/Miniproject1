@@ -25,7 +25,6 @@ async function render(data) {
   let header = `<nav aria-label="breadcrumb"> <ol class="breadcrumb breadcrumb-chevron p-3 rounded-3">`;
   let footer = `</ol> </nav>`;
   let content = ``;
-  console.log(traverse.length);
   switch(true){
     case traverse.length <= maxPathSize:
       traverse.slice(0, -1).forEach((e)=>{
