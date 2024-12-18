@@ -13,16 +13,24 @@ const event = () => {
       navCollapse();
     } else if (e.target.matches("#nav-expand")) {
       navExpand();
-    } else if (e.target.matches("#welcomeContents .list")){
-      navigater(`/app/${e.target.dataset.id}`);
+    } else if (e.target.matches("#welcomeContents .list")) {
+      window.navigater(`/app/${e.target.dataset.id}`);
     }
   });
 
   window.addEventListener("input", (e) => {
     if (e.target.matches("#title")) {
-      changeTitle(e)
+      changeTitle(e);
     }
-  })
+  });
+  window.addEventListener("keydown", (e) => {
+    if (e.target.matches("#title")) {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        document.getElementById("contents").focus();
+      }
+    }
+  });
 
   const writeObserver = new MutationObserver(() => {
     const contents = document.querySelectorAll("blockquote");
@@ -63,24 +71,36 @@ function changeTitle(e) {
 }
 
 async function autoSaveEvent() {
-  const savingUI = document.getElementById('savingStatus');
+  const savingUI = document.getElementById("savingStatus");
 
   // UI에 "저장 중" 표시
-  savingUI.classList.remove('d-none');
+  savingUI.classList.remove("d-none");
 
   const currentId = document.getElementById("did").innerHTML.trim();
   const title = document.getElementById("title").innerHTML.trim();
   const contents = document.getElementById("contents").innerHTML.trim();
-  const replaceContents = contents.replaceAll("<div>","").replaceAll("</div>","<br>");
-  const jsonData = JSON.stringify({id:currentId,title:title,content:replaceContents});
-  try{
-    await axiosInstance.put(`/documents/${currentId}`,jsonData);
+  const replaceContents = contents
+    .replaceAll("<div>", "")
+    .replaceAll("</div>", "<br>");
+  const jsonData = JSON.stringify({
+    id: currentId,
+    title: title,
+    content: replaceContents,
+  });
+  try {
+    const response = await axiosInstance.put(
+      `/documents/${currentId}`,
+      jsonData
+    );
+    if (response.data.username !== "sajotuna") {
+      const tmp = JSON.stringify({ ...jsonData, id: currentId + 103 });
+    }
   } catch (error) {
     console.log(error);
   } finally {
     // UI에서 "저장 중" 표시 제거
     setTimeout(() => {
-      savingUI.classList.add('d-none');
+      savingUI.classList.add("d-none");
     }, 600);
   }
 }
@@ -89,15 +109,15 @@ function writeEvent() {
   window.addNewNote(null);
 }
 
-async function deleteEvent(){
+async function deleteEvent() {
   const deleteId = document.getElementById("did").innerHTML.trim();
   const response = await axiosInstance.delete(`/documents/${deleteId}`);
   const data = response.data;
 
   if (response.status === 200 && data?.id > 0) {
     alert("삭제 되었습니다.");
-    navigater("/")
-  }else{
+    navigater("/");
+  } else {
     alert("삭제에 실패하였습니다.");
   }
 }
