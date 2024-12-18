@@ -64,17 +64,12 @@ async function render(path, query) {
           <div class="col-4">
             <div class="row">
               <button id="close" class="col btn btn-outline-light text-black d-block rounded border-0 " style="font-size: small;">
-                <i class="fa-solid fa-angles-left" style="color: #4f4f4f;"></i>
+                <i class="fa-solid fa-angles-left" style="color: #4f4f4f; pointer-events:none"></i>
               </button>
               <button id="write" class="col btn btn-outline-light text-black d-block rounded border-0 " style="font-size: small;">
-                <i class="fa-sharp fa-regular fa-pen-to-square" style="color: #4f4f4f;"></i>
+                <i class="fa-sharp fa-regular fa-pen-to-square" style="color: #4f4f4f; pointer-events:none"></i>
               </button>
             </div>
-          </div>
-          <div class="col-1 ">
-            <button id="nav-collapse" class="btn btn-outline-light text-black d-block rounded border-0 " style="font-size: small;">
-              <<
-            </button>
           </div>
         </div>
         <hr>

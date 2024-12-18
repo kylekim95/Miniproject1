@@ -2,6 +2,7 @@
 
 const event = ()=> {
   window.addEventListener("click", e =>{
+    console.log(e.target);
     if(e.target.matches("#save")){
       saveEvent();
     }
@@ -11,7 +12,7 @@ const event = ()=> {
     else if(e.target.matches("#delete")){
       deleteEvent();
     }
-    else if(e.target.matches("#nav-collapse")){
+    else if(e.target.matches("#close")){
       navCollapse();
     }
     else if(e.target.matches("#nav-expand")){
@@ -34,22 +35,17 @@ const event = ()=> {
 
 function navCollapse(){
   const navi = document.getElementById("navi");
-  navi.style.display = "none";
-  const naviExpandBtn = document.getElementById("nav-expand");
-  naviExpandBtn.style.display = "block";
-  //expand content
-  const content = document.getElementById("content");
-  content.classList.remove("col-9");
-  content.classList.add("col-12");
+  navi.classList.add("d-none");
+  const navExpand = document.getElementById("nav-expand");
+  navExpand.classList.remove("d-none");
+  navExpand.classList.add("d-block");
 }
 function navExpand(){
   const navi = document.getElementById("navi");
-  navi.style.display = "block";
-  const naviExpandBtn = document.getElementById("nav-expand");
-  naviExpandBtn.style.display = "none";
-  const content = document.getElementById("content");
-  content.classList.remove("col-12");
-  content.classList.add("col-9");
+  navi.classList.remove("d-none");
+  const navExpand = document.getElementById("nav-expand");
+  navExpand.classList.add("d-none");
+  navExpand.classList.remove("d-block");
 }
 
 async function saveEvent(){
