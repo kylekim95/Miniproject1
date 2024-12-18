@@ -22,7 +22,6 @@
     sans-serif;
   color: var(--text-color);
 }
-
 .main {
   overflow-y: auto;
   height: 100%;
@@ -34,7 +33,8 @@
 }
 
 .navi {
-  background-color: var(--bg-ligthGray);
+  background-color: var(--bg-ligthGray) !important;
+  border-right: 1px solid var(--bg-gray);
   height: 100vh;
   overflow-y: auto;
   max-width: 340px;
