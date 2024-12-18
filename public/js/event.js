@@ -18,6 +18,27 @@ const event = () => {
     }
   });
 
+  window.addEventListener("mousedown", (e)=>{
+    if(e.target.matches("#resizer")) {
+      let left = document.getElementById('navi');
+      e.preventDefault();
+      e.stopPropagation();
+      function mousemoveHandler(e){
+        let limit = Math.min(Math.max(e.clientX, 180), 360);
+        left.style.setProperty('width', `${limit}px`);
+        e.preventDefault();
+        e.stopPropagation();
+      }
+      window.addEventListener("mousemove", mousemoveHandler);
+      window.addEventListener("mouseup", (e)=>{
+        window.removeEventListener("mousemove", mousemoveHandler);
+        document.body.style.removeProperty('cursor');
+        e.preventDefault();
+        e.stopPropagation();
+      });
+    }
+  });
+
   window.addEventListener("input", (e) => {
     if (e.target.matches("#title")) {
       changeTitle(e);
