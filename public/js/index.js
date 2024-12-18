@@ -40,6 +40,8 @@ const navigater = function(path){
   history.pushState(null,null,path);
   render(path, location.serch);
 }
+window.navigater = navigater;
+
 window.addEventListener('popstate',()=>{
   render(location.pathname, location.serch);
 })
