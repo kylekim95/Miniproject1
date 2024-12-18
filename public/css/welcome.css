@@ -1,3 +1,16 @@
+#welcomeContents div.list{
+    color: none;
+    text-decoration: none;
+    cursor: pointer;
+    display: flex; flex-flow: column; justify-content: space-between;
+    align-items: stretch;
+    flex-grow:1;
+    position: relative; 
+    z-index: 10;
+}
+#welcomeContents div.list *{
+    pointer-events:none;
+}
 #welcomeContents .list p {
     width: 100%;
     text-overflow: ellipsis;
