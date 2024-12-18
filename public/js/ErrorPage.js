@@ -28,7 +28,13 @@ async function render(path, query){
             <div class="btn btn-primary btn-lg px-4 gap-3" onclick="navigater('/');">돌아가기</div>
           </div>
         </div>
-      </div>`;
+      </div>
+      <div class="d-grid mt-5 gap-2 d-sm-flex justify-content-sm-center align-content-center">
+        <div class="btn btn-primary btn-sm px-4 gap-3" onclick='
+            document.getElementById("content").classList.add("party-time");
+        '>파티 타임!</div>
+      </div>`
+      ;
 }
 
 export default render;
