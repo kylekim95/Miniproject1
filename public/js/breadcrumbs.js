@@ -29,21 +29,24 @@ async function render(data) {
   switch(true){
     case traverse.length <= maxPathSize:
       traverse.slice(0, -1).forEach((e)=>{
+        let id = (e.id === -1 ? '/' : '/app/' + e.id);
         content += `<li class="breadcrumb-item">
-                      <div class="pe-auto" onclick="location='${(e.id === -1 ? '/' : '/app/'+e.id)}'">${(e.title.length > 10 ? e.title.slice(0, 10) : e.title)}</div>
+                      <div class="pe-auto" onclick="navigater('${id}');">${(e.title.length > 10 ? e.title.slice(0, 10) : e.title)}</div>
                     </li>`;
       });
       break;
     case traverse.length > maxPathSize:
       traverse.slice(0, 2).forEach((e)=>{
+        let id = (e.id === -1 ? '/' : '/app/' + e.id);
         content += `<li class="breadcrumb-item">
-                      <div class="pe-auto" onclick="location='${(e.id === -1 ? '/' : '/app/'+e.id)}'">${(e.title.length > 10 ? e.title.slice(0, 10) : e.title)}</div>
+                      <div class="pe-auto" onclick="navigater('${id}');">${(e.title.length > 10 ? e.title.slice(0, 10) : e.title)}</div>
                     </li>`;
       });
       content += `<li class="breadcrumb-item">...</li>`;
       traverse.slice(-2, -1).forEach((e)=>{
+        let id = (e.id === -1 ? '/' : '/app/' + e.id);
         content += `<li class="breadcrumb-item">
-                      <div class="pe-auto" onclick="location='${(e.id === -1 ? '/' : '/app/'+e.id)}'">${(e.title.length > 10 ? e.title.slice(0, 10) : e.title)}</div>
+                      <div class="pe-auto" onclick="navigater('${id}');">${(e.title.length > 10 ? e.title.slice(0, 10) : e.title)}</div>
                     </li>`;
       });
       break;
