@@ -1,3 +1,5 @@
+import axiosInstance from "./axiosInstance.js";
+
 const maxPathSize = 4;
 
 function FindPath(current, target) {
@@ -17,9 +19,8 @@ function FindPath(current, target) {
 
 async function render(data) {
   //TODO: Switch to custom Network API
-  const response = await fetch(`http://localhost:3002/documents`);
-  const responseJson = await response.json();
-  let fakeRoot = { id: -1, documents: responseJson, title: "Home" };
+  const response = await axiosInstance.get(`/documents`);
+  let fakeRoot = { id: -1, documents: response.data, title: "Home" };
   let traverse = FindPath(fakeRoot, data.id);
   
   let header = `<nav aria-label="breadcrumb"> <ol class="breadcrumb breadcrumb-chevron p-3 rounded-3">`;
