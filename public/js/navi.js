@@ -34,7 +34,7 @@ function renderMenuList(id, list) {
           e.id
         }' aria-controls='collapse${e.id}' onclick="event.stopPropagation();">
           <i class="fa-regular fa-note-sticky" style="color: #5f5e5b;"></i>
-          <i class="fa-solid fa-chevron-down" style="color: #5f5e5b; width: 14px; font-size: small;"></i>
+          ${child.length > 0 ? `<i class="fa-solid fa-chevron-down" style="color: #5f5e5b; width: 14px; font-size: small;"></i>` : `<i class="fa-regular fa-note-sticky" style="color: #5f5e5b;"></i>`}
         </span>
         <span id="${e.id}">${e.title}</span>
       </div>
