@@ -15,7 +15,9 @@ window.addNewNote = async function addNewNote(parent) {
 window.deleteNote = async function deleteNote(id) {
   const response = await axiosInstance.delete(`/documents/${id}`);
 
-  location = `/app`;
+  const data = await response.data;
+
+  location = `/app/${data.parent ? data.parent.id : ""}`;
 };
 
 function renderMenuList(id, list) {
