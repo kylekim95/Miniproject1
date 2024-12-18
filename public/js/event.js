@@ -56,15 +56,27 @@ const event = () => {
     const contents = document.querySelectorAll("blockquote");
     if (contents) {
       contents.forEach((content) => {
-        content.addEventListener("blur", () => {
-          console.log("observing");
-          autoSaveEvent();
-        });
+        let prev = content.textContent; // blur 이벤트 전 텍스트 데이터
+        handleBlockquote(content,prev);
       });
     }
   });
   writeObserver.observe(document.body, { childList: true, subtree: true });
 };
+
+function handleBlockquote (content,prev) {
+  // blur 이벤트 리스너를 한번만 등록하도록
+  if(!content.dataset.observed){
+    content.dataset.observed = 'true';
+    content.addEventListener("blur", () => {
+      // blur 이벤트 전,후 비교
+      if(prev !== content.textContent) {
+        prev = content.textContent;
+        autoSaveEvent();
+      }
+    })
+  }
+}
 
 function navCollapse() {
   const navi = document.getElementById("navi");
@@ -93,7 +105,6 @@ function changeTitle(e) {
   const breadcrumbTitle = document.getElementById("breadcrumbTitle");
   const currentId = document.getElementById("did").innerHTML.trim();
   const navTitle = document.getElementById(`${currentId}`);
-  const text = document.getElementById("text");
   navTitle.textContent = e.target.textContent;
   breadcrumbTitle.textContent = e.target.textContent;
 }
