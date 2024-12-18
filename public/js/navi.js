@@ -9,15 +9,14 @@ window.addNewNote = async function addNewNote(parent) {
 
   const data = await response.data;
 
-  location = `/app/${data.id}`;
+  navigater(`/app/${data.id}`);
 };
 
 window.deleteNote = async function deleteNote(id) {
   const response = await axiosInstance.delete(`/documents/${id}`);
 
   const data = await response.data;
-
-  location = `/app/${data.parent ? data.parent.id : ""}`;
+  navigater(`/app/${data.parent ? data.parent.id : ""}`);
 };
 
 function renderMenuList(id, list) {
