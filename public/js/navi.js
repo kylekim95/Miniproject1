@@ -12,6 +12,12 @@ window.addNewNote = async function addNewNote(parent) {
   location = `/app/${data.id}`;
 };
 
+window.deleteNote = async function deleteNote(id) {
+  const response = await axiosInstance.delete(`/documents/${id}`);
+
+  location = `/app`;
+};
+
 function renderMenuList(id, list) {
   let items = "";
   let isOpenCollapse = false;
@@ -23,18 +29,26 @@ function renderMenuList(id, list) {
     items += `<li onclick="location='/app/${
       e.id
     }'" class="btn btn-outline-light overflow-x-hidden overflow-y-hidden text-black d-block rounded border-0 text-start d-flex justify-content-between" style="height: 30px;">
-      <div><span type="button" id="collapse" data-bs-toggle="collapse" data-bs-target='#collapse${
-        e.id
-      }' aria-controls='collapse${e.id}' onclick="event.stopPropagation();">
-        <i class="fa-regular fa-note-sticky" style="color: #4f4f4f;"></i>
-      </span>
-      ${e.title}
+      <div>
+        <span type="button" id="collapse" data-bs-toggle="collapse" data-bs-target='#collapse${
+          e.id
+        }' aria-controls='collapse${e.id}' onclick="event.stopPropagation();">
+          <i class="fa-regular fa-note-sticky" style="color: #4f4f4f;"></i>
+        </span>
+        ${e.title}
       </div>
-      <button class="btn btn-outline-light d-block rounded border-0 p-0" onclick="event.stopPropagation(); addNewNote(${
-        e.id
-      })" style="font-size: small;">
-        <i class="fa-solid fa-plus" style="color: #4f4f4f;"></i>
-      </button>
+      <div class="d-flex gap-1">
+        <button class="btn btn-outline-light d-block rounded border-0 p-0" onclick="event.stopPropagation(); deleteNote(${
+          e.id
+        })" style="font-size: small;">
+          <i class="fa-regular fa-trash-can" style="color: #4f4f4f;"></i>
+        </button>
+        <button class="btn btn-outline-light d-block rounded border-0 p-0" onclick="event.stopPropagation(); addNewNote(${
+          e.id
+        })" style="font-size: small;">
+          <i class="fa-solid fa-plus" style="color: #4f4f4f;"></i>
+        </button>
+      </div>
     </li>
     <div class="collapse ps-2 ${isOpen ? "show" : ""}" id='collapse${
       e.id
