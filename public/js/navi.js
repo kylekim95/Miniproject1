@@ -1,4 +1,5 @@
 // navi.js
+import axiosInstance from "./axiosInstance.js";
 
 async function render(path, query) {
   const header = `<div>
@@ -25,12 +26,14 @@ async function render(path, query) {
         <ul class="list-unstyled ps-0" >`;
   const end = `</ul></div>`;
 
-  const response = await fetch(`http://localhost:3001/document/`);
-  if(!response.ok){
+  const response = await axiosInstance.get('/documents');
+
+  if(response.status !== 200) {
     return header + end;    
   }
-  const data = await response.json();
-  
+
+  const data = await response.data;
+
   let body = "";
   data.forEach(e => {
     body += 

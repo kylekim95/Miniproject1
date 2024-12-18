@@ -18,6 +18,18 @@ const event = ()=> {
       navExpand();
     }
   })
+  const writeObserver = new MutationObserver(()=>{
+    const contents = document.querySelectorAll('blockquote');
+    if(contents){
+      contents.forEach((content)=>{
+        content.addEventListener("blur",()=>{
+          console.log('observing');
+          autoSaveEvent();
+        });
+      })
+    }
+  });
+  writeObserver.observe(document.body,{childList:true, subtree:true});
 }
 
 function navCollapse(){
@@ -80,6 +92,36 @@ async function saveEvent(){
       alert("등록에 실패하였습니다.");
     }
   }
+}
+
+async function autoSaveEvent() {
+
+  const savingUI = document.getElementById('savingStatus');
+
+  // UI에 "저장 중" 표시
+  savingUI.classList.remove('d-none');
+
+  async function saving(id, obj) {
+    try {
+      console.log("데이터 업데이트");
+      // await axios.put(`http://localhost:3001/document/${id}`, obj);
+    } catch (err) {
+      if (err.response && err.response.status === 404) {
+        // ID 없으면 post 요청
+        // await axios.post(`http://localhost:3001/document`, obj);
+        console.log("새 데이터 저장");
+      } else {
+        console.error("저장 실패:", err);
+      }
+    } finally {
+      // UI에서 "저장 중" 표시 제거
+      setTimeout(() => {
+        savingUI.classList.add('d-none');
+      }, 600);
+    }
+  }
+  saving();
+
 }
 
 function writeEvent(){
