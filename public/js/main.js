@@ -35,12 +35,10 @@ async function body(data) {
   data.documents.forEach((document) => {
     // TODO: navigation으로 변경하기
     sub_posts += `
-    <div id=${document.id} class="item-container btn btn-outline-light w-100" onclick="location='/app/${document.id}'">
-      <div class="d-flex gap-2 align-items-center">
-        <i class="fa-regular fa-note-sticky"></i>
-        <u class="link-secondary">${document.title}</u>
-      </div>
-    </div>
+    <button id=${document.id} class="item-container btn btn-outline-light w-100 d-flex gap-2 align-items-center" onclick="navigater('/app/${document.id}');">
+      <i class="fa-regular fa-note-sticky" style="pointer-events:none;"></i>
+      <u class="link-secondary" style="pointer-events:none;">${document.title}</u>
+    </button>
     `;
   });
 
@@ -55,7 +53,7 @@ async function body(data) {
         <blockquote id="contents" class="p-1 fw-medium" contenteditable="true">
           ${data.content ? data.content : ""}
         </blockquote>
-        <div class="d-flex flex-column gap-1">
+        <div id="documentsList" class="d-flex flex-column gap-1">
           ${sub_posts}
         </div>
       </div>
