@@ -2,20 +2,12 @@
 import axiosInstance from "./axiosInstance.js";
 
 window.addNewNote = async function addNewNote(parent) {
-  console.log(parent);
-  const data = await (
-    await fetch(`https://kdt-api.fe.dev-cos.com/documents`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-username": "sajotuna",
-      },
-      body: JSON.stringify({
-        title: "새 문서",
-        parent,
-      }),
-    })
-  ).json();
+  const response = await axiosInstance.post("/documents", {
+    title: "새 문서",
+    parent,
+  });
+
+  const data = await response.data;
 
   location = `/app/${data.id}`;
 };
@@ -76,10 +68,10 @@ async function render(path, query) {
         <ul class="list-unstyled ps-0" >`;
   const end = `</ul></div>`;
 
-  const response = await axiosInstance.get('/documents');
+  const response = await axiosInstance.get("/documents");
 
-  if(response.status !== 200) {
-    return header + end;    
+  if (response.status !== 200) {
+    return header + end;
   }
 
   const data = await response.data;
