@@ -60,28 +60,30 @@ function renderMenuList(id, list) {
 }
 
 async function render(path, query) {
-  const header = `<div>
-        <div class="row">
+  const header = `<div class="position-relative h-100">
+        <div class="row ">
           <div class="col-8">
             <div class="link-body-emphasis text-decoration-none" onclick="navigater('/');" style="cursor:pointer;">
-              <i class="fa-solid fa-book me-2"></i>
-              <span class="fs-5 fw-semibold">Notepad</span>
+              <span class="fs-5 fw-semibold">userName의 노션</span>
             </div>
           </div>
           <div class="col-4">
             <div class="row">
-              <button id="close" class="col btn btn-outline-light text-black d-block rounded border-0 " style="font-size: small;">
+              <button id="close" class="col btn btn-outline-light text-black d-block rounded border-sm ">
                 <i class="fa-solid fa-angles-left" style="color: #4f4f4f; pointer-events:none"></i>
-              </button>
-              <button id="write" class="col btn btn-outline-light text-black d-block rounded border-0 " style="font-size: small;">
-                <i class="fa-sharp fa-regular fa-pen-to-square" style="color: #4f4f4f; pointer-events:none"></i>
               </button>
             </div>
           </div>
         </div>
         <hr>
         <ul class="list-unstyled ps-0" >`;
-  const end = `</ul></div>`;
+  const end = `
+      </ul>
+      <button id="write" class="btn text-black d-block rounded border-0 position-absolute bottom-0 w-100 py-2">
+        <i class="fa-sharp fa-regular fa-pen-to-square" style="color: #4f4f4f; pointer-events:none"></i> 새 페이지
+      </button>
+    </div>
+  `;
 
   const response = await axiosInstance.get("/documents");
 
