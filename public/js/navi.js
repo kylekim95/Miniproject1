@@ -71,6 +71,11 @@ async function render(path, query) {
               </button>
             </div>
           </div>
+          <div class="col-1 ">
+            <button id="nav-collapse" class="btn btn-outline-light text-black d-block rounded border-0 " style="font-size: small;">
+              <<
+            </button>
+          </div>
         </div>
         <hr>
         <ul class="list-unstyled ps-0" >`;

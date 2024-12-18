@@ -11,7 +11,6 @@ async function render(path, query){
           </div>
         </div>
       </div>`;
-  
 }
 
 export default render;

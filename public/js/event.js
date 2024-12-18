@@ -11,7 +11,13 @@ const event = ()=> {
     else if(e.target.matches("#delete")){
       deleteEvent();
     }
-  });
+    else if(e.target.matches("#nav-collapse")){
+      navCollapse();
+    }
+    else if(e.target.matches("#nav-expand")){
+      navExpand();
+    }
+  })
   const writeObserver = new MutationObserver(()=>{
     const contents = document.querySelectorAll('blockquote');
     if(contents){
@@ -24,6 +30,26 @@ const event = ()=> {
     }
   });
   writeObserver.observe(document.body,{childList:true, subtree:true});
+}
+
+function navCollapse(){
+  const navi = document.getElementById("navi");
+  navi.style.display = "none";
+  const naviExpandBtn = document.getElementById("nav-expand");
+  naviExpandBtn.style.display = "block";
+  //expand content
+  const content = document.getElementById("content");
+  content.classList.remove("col-9");
+  content.classList.add("col-12");
+}
+function navExpand(){
+  const navi = document.getElementById("navi");
+  navi.style.display = "block";
+  const naviExpandBtn = document.getElementById("nav-expand");
+  naviExpandBtn.style.display = "none";
+  const content = document.getElementById("content");
+  content.classList.remove("col-12");
+  content.classList.add("col-9");
 }
 
 async function saveEvent(){
