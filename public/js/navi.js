@@ -1,29 +1,23 @@
 // navi.js
 
-const mockData = [
-  {
-    id: 1, // Document id
-    title: "노션을 만들자", // Document title
-    documents: [
-      {
-        id: 2,
-        title: "블라블라",
-        documents: [
-          {
-            id: 3,
-            title: "함냐함냐",
-            documents: [],
-          },
-        ],
+window.addNewNote = async function addNewNote(parent) {
+  console.log(parent);
+  const data = await (
+    await fetch(`https://kdt-api.fe.dev-cos.com/documents`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-username": "sajotuna",
       },
-    ],
-  },
-  {
-    id: 4,
-    title: "hello!",
-    documents: [],
-  },
-];
+      body: JSON.stringify({
+        title: "새 문서",
+        parent,
+      }),
+    })
+  ).json();
+
+  location = `/app/${data.id}`;
+};
 
 function renderMenuList(list) {
   let items = "";
@@ -31,8 +25,8 @@ function renderMenuList(list) {
   list.forEach((e) => {
     items += `<li onclick="location='/app/${
       e.id
-    }'" class="btn btn-outline-light overflow-x-hidden overflow-y-hidden text-black d-block rounded border-0 text-start" style="height: 30px;">
-      <span type="button" id="collapse" data-bs-toggle="collapse" data-bs-target='#collapse${
+    }'" class="btn btn-outline-light overflow-x-hidden overflow-y-hidden text-black d-block rounded border-0 text-start d-flex justify-content-between" style="height: 30px;">
+      <div><span type="button" id="collapse" data-bs-toggle="collapse" data-bs-target='#collapse${
         e.id
       }' aria-expanded='false' aria-controls='collapse${
       e.id
@@ -40,6 +34,12 @@ function renderMenuList(list) {
         <i class="fa-regular fa-note-sticky" style="color: #4f4f4f;"></i>
       </span>
       ${e.title}
+      </div>
+      <button class="btn btn-outline-light d-block rounded border-0 p-0" onclick="event.stopPropagation(); addNewNote(${
+        e.id
+      })" style="font-size: small;">
+        <i class="fa-solid fa-plus" style="color: #4f4f4f;"></i>
+      </button>
     </li>
     <div class="collapse ps-2" id='collapse${e.id}'>${renderMenuList(
       e.documents
@@ -81,8 +81,7 @@ async function render(path, query) {
   }
   const data = await response.json();
 
-  // TODO: data로 변경하기기
-  const body = renderMenuList(mockData);
+  const body = renderMenuList(data);
 
   return header + body + end;
 }
