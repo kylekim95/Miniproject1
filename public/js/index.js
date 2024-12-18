@@ -48,5 +48,3 @@ window.addEventListener('popstate',()=>{
 
 render($path, $query);
 event();
-
-export {navigater};

@@ -42,7 +42,6 @@ async function render(path, query){
     latestDocs.map(async (doc)=>{
       try {
         const docData = await axiosInstance.get(`/documents/${doc.id}`);
-        console.log(docData);
         return{
           ...doc, content : docData.data.content
         }
@@ -64,13 +63,11 @@ async function render(path, query){
           ${
             latestDocs.map((doc, idx)=>{
               return `
-              <a onclick=navigater('/app/${doc.id}') class="list border rounded-2 p-3 col">
-                <div>
+              <div class="list border rounded-2 p-3 col" data-id="${doc.id}">
                   <h6 class="text-truncate">${doc.title}</h6>
                   <p class="mb-1 fs-6 fw-light lh-sm">${doc.content}</p>
                   <span class="updated">${updateTimeCalc(doc.updatedAt)}</span>
-                </div>
-              </a>`
+              </div>`
             }).join("")
           }
           </div>
