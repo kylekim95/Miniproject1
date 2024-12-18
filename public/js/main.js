@@ -1,18 +1,19 @@
 // main.js
+import axiosInstance from "./axiosInstance.js";
 
 async function render(path = "", query) {
   const pathArr = path.split("/");
-  const response = await fetch(`http://localhost:3001/document/` + pathArr[2]);
+  const response = await axiosInstance.get(`/documents/${pathArr[2]}`);
   let data;
   try {
-    data = await response.json();
+    data = await response.data;
   } catch (error) {}
 
-  if (response.ok && data?.id > 0) {
+  if (response.status === 200 && data?.id > 0) {
     return body(data);
   } else {
-   const response = await fetch(`http://localhost:3001/document/`);
-   const data = await response.json();
+   const response = await axiosInstance.get('/documents');
+   const data = await response.data;
    const newId = Number(data[data.length - 1].id) + 1;
    return body({id:newId, title:"새로운 글 제목", content:"내용을 입력 바랍니다."});
   }
