@@ -1,5 +1,6 @@
 // event.js
 import axiosInstance from "./axiosInstance.js";
+import { navigater } from "./index.js";
 
 const event = () => {
   window.addEventListener("click", (e) => {
@@ -13,6 +14,8 @@ const event = () => {
       navCollapse();
     } else if (e.target.matches("#nav-expand")) {
       navExpand();
+    } else if (e.target.matches("#welcomeContents .list")){
+      navigater(`/app/${e.target.dataset.id}`);
     }
   });
   const writeObserver = new MutationObserver(() => {
