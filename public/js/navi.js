@@ -2,22 +2,22 @@
 import axiosInstance from "./axiosInstance.js";
 
 window.addNewNote = async function addNewNote(parent) {
-  console.log(parent);
-  const data = await (
-    await fetch(`https://kdt-api.fe.dev-cos.com/documents`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-username": "sajotuna",
-      },
-      body: JSON.stringify({
-        title: "새 문서",
-        parent,
-      }),
-    })
-  ).json();
+  const response = await axiosInstance.post("/documents", {
+    title: "새 문서",
+    parent,
+  });
+
+  const data = await response.data;
 
   location = `/app/${data.id}`;
+};
+
+window.deleteNote = async function deleteNote(id) {
+  const response = await axiosInstance.delete(`/documents/${id}`);
+
+  const data = await response.data;
+
+  location = `/app/${data.parent ? data.parent.id : ""}`;
 };
 
 function renderMenuList(id, list) {
@@ -30,19 +30,28 @@ function renderMenuList(id, list) {
 
     items += `<li onclick="location='/app/${
       e.id
-    }'" class="btn btn-outline-light overflow-x-hidden overflow-y-hidden text-black d-block rounded border-0 text-start d-flex justify-content-between" style="height: 30px;">
-      <div><span type="button" id="collapse" data-bs-toggle="collapse" data-bs-target='#collapse${
-        e.id
-      }' aria-controls='collapse${e.id}' onclick="event.stopPropagation();">
-        <i class="fa-regular fa-note-sticky" style="color: #4f4f4f;"></i>
-      </span>
-      ${e.title}
+    }'" class="item-container btn btn-outline-light overflow-x-hidden overflow-y-hidden text-black d-block rounded border-0 text-start d-flex justify-content-between pe-1" style="height: 30px;">
+      <div>
+        <span type="button" id="collapse" data-bs-toggle="collapse" data-bs-target='#collapse${
+          e.id
+        }' aria-controls='collapse${e.id}' onclick="event.stopPropagation();">
+          <i class="fa-regular fa-note-sticky" style="color: #5f5e5b;"></i>
+          <i class="fa-solid fa-chevron-down" style="color: #5f5e5b; width: 14px; font-size: small;"></i>
+        </span>
+        ${e.title}
       </div>
-      <button class="btn btn-outline-light d-block rounded border-0 p-0" onclick="event.stopPropagation(); addNewNote(${
-        e.id
-      })" style="font-size: small;">
-        <i class="fa-solid fa-plus" style="color: #4f4f4f;"></i>
-      </button>
+      <div class="d-flex document-control-btn">
+        <button class="btn btn-outline-light d-block rounded border-0 py-0 px-1" onclick="event.stopPropagation(); deleteNote(${
+          e.id
+        })" style="font-size: small;">
+          <i class="fa-regular fa-trash-can" style="color: #5f5e5b;"></i>
+        </button>
+        <button class="btn btn-outline-light d-block rounded border-0 py-0 px-1" onclick="event.stopPropagation(); addNewNote(${
+          e.id
+        })" style="font-size: small;">
+          <i class="fa-solid fa-plus" style="color: #5f5e5b;"></i>
+        </button>
+      </div>
     </li>
     <div class="collapse ps-2 ${isOpen ? "show" : ""}" id='collapse${
       e.id
@@ -76,10 +85,10 @@ async function render(path, query) {
         <ul class="list-unstyled ps-0" >`;
   const end = `</ul></div>`;
 
-  const response = await axiosInstance.get('/documents');
+  const response = await axiosInstance.get("/documents");
 
-  if(response.status !== 200) {
-    return header + end;    
+  if (response.status !== 200) {
+    return header + end;
   }
 
   const data = await response.data;
