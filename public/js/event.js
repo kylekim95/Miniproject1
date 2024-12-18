@@ -1,6 +1,5 @@
 // event.js
 import axiosInstance from "./axiosInstance.js";
-import { navigater } from "./index.js";
 
 const event = () => {
   window.addEventListener("click", (e) => {

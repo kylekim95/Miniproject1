@@ -10,6 +10,15 @@ const $content = document.getElementById('content');
 const $path = location.pathname;
 const $query = location.search;
 
+//spa 설정
+window.navigater = function(path){
+  history.pushState(null,null,path);
+  render(path, location.serch);
+}
+window.addEventListener('popstate',()=>{
+  render(location.pathname, location.serch);
+})
+
 const routes = [
   { path: '/', component: welcome },
   { path: '/app', component: main },
@@ -35,16 +44,5 @@ const render = async (path = "", query= "") => {
   }
 };
 
-//spa 설정
-const navigater = function(path){
-  history.pushState(null,null,path);
-  render(path, location.serch);
-}
-window.addEventListener('popstate',()=>{
-  render(location.pathname, location.serch);
-})
-
 render($path, $query);
 event();
-
-export {navigater};
