@@ -35,5 +35,16 @@ const render = async (path = "", query= "") => {
   }
 };
 
+//spa 설정
+const navigater = function(path){
+  history.pushState(null,null,path);
+  render(path, location.serch);
+}
+window.addEventListener('popstate',()=>{
+  render(location.pathname, location.serch);
+})
+
 render($path, $query);
 event();
+
+export {navigater};
