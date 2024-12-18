@@ -9,3 +9,15 @@
 .document-control-btn > button:hover {
   background: var(--bs-gray-200);
 }
+
+.item-container:hover > div > #collapse > *:first-child {
+  display: none;
+}
+
+#collapse > *:last-child {
+  display: none;
+}
+
+.item-container:hover > div > #collapse > *:last-child {
+  display: block;
+}

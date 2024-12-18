@@ -33,7 +33,8 @@ function renderMenuList(id, list) {
         <span type="button" id="collapse" data-bs-toggle="collapse" data-bs-target='#collapse${
           e.id
         }' aria-controls='collapse${e.id}' onclick="event.stopPropagation();">
-          <i class="fa-regular fa-note-sticky" style="color: #4f4f4f;"></i>
+          <i class="fa-regular fa-note-sticky" style="color: #5f5e5b;"></i>
+          <i class="fa-solid fa-chevron-down" style="color: #5f5e5b; width: 14px; font-size: small;"></i>
         </span>
         ${e.title}
       </div>
@@ -41,12 +42,12 @@ function renderMenuList(id, list) {
         <button class="btn btn-outline-light d-block rounded border-0 py-0 px-1" onclick="event.stopPropagation(); deleteNote(${
           e.id
         })" style="font-size: small;">
-          <i class="fa-regular fa-trash-can" style="color: #4f4f4f;"></i>
+          <i class="fa-regular fa-trash-can" style="color: #5f5e5b;"></i>
         </button>
         <button class="btn btn-outline-light d-block rounded border-0 py-0 px-1" onclick="event.stopPropagation(); addNewNote(${
           e.id
         })" style="font-size: small;">
-          <i class="fa-solid fa-plus" style="color: #4f4f4f;"></i>
+          <i class="fa-solid fa-plus" style="color: #5f5e5b;"></i>
         </button>
       </div>
     </li>
