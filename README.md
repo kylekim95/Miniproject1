@@ -1,4 +1,4 @@
-# Miniproject1
+# Mini Project1
 데브코스 3-4 미니 프로젝트1
 
 https://github.com/prgrms-fe-devcourse/NFE-3-4-project1
