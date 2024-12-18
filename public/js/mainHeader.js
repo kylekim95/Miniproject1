@@ -17,7 +17,7 @@ async function render(data){
       </div>
     </div>
     <div id="delete" class="btn btn-outline-light text-black me-1">
-      <i class="fa-solid fa-trash"></i>
+      <i class="fa-solid fa-trash" style="pointer-events:none;"></i>
     </div>
   </div>`;
 }
