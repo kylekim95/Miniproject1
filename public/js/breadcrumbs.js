@@ -18,7 +18,6 @@ function FindPath(current, target) {
 }
 
 async function render(data) {
-  //TODO: Switch to custom Network API
   const response = await axiosInstance.get(`/documents`);
   let fakeRoot = { id: -1, documents: response.data, title: "Home" };
   let traverse = FindPath(fakeRoot, data.id);

@@ -30,8 +30,8 @@ function renderMenuList(id, list) {
 
     items += `<li onclick="location='/app/${
       e.id
-    }'" class="btn btn-outline-light overflow-x-hidden overflow-y-hidden text-black d-block rounded border-0 text-start d-flex justify-content-between" style="height: 30px;">
-      <div><span type="button" id="collapse" data-bs-toggle="collapse" data-bs-target='#collapse${
+    }'" class="btn btn-outline-light overflow-x-hidden overflow-y-hidden text-black d-block rounded border-0 text-start d-flex justify-content-between" style="height: 30px;" data-docid=${e.id}>
+    <div><span type="button" id="collapse" data-bs-toggle="collapse" data-bs-target='#collapse${
         e.id
       }' aria-controls='collapse${e.id}' onclick="event.stopPropagation();">
         <i class="fa-regular fa-note-sticky" style="color: #4f4f4f;"></i>
@@ -73,7 +73,7 @@ async function render(path, query) {
           </div>
         </div>
         <hr>
-        <ul class="list-unstyled ps-0" >`;
+        <ul id = "nav-list" class="list-unstyled ps-0" >`;
   const end = `</ul></div>`;
 
   const response = await axiosInstance.get('/documents');

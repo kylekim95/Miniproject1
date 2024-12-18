@@ -3,12 +3,13 @@ import breadcrumb from "./breadcrumbs.js";
 async function render(data){
   let _breadcrumb = await breadcrumb(data);
 
+//   <button id="nav-expand" class="btn btn-outline-light text-black d-block rounded border-0 d-none" style="font-size: small;">
+//   <i class="fa-solid fa-angles-left" style="color: #4f4f4f; pointer-events:none; transform:scaleX(-1);"></i>
+//    </button>
+
   return `
   <!-- top menu -->
   <div id="mainHeader" class="container-fluid align-items-center d-flex">
-    <button id="nav-expand" class="btn btn-outline-light text-black d-block rounded border-0 d-none" style="font-size: small;">
-      <i class="fa-solid fa-angles-left" style="color: #4f4f4f; pointer-events:none; transform:scaleX(-1);"></i>
-    </button>
     ${_breadcrumb}
     <div id="savingStatus" class="d-none">
       <span class="me-1">저장 중</span>

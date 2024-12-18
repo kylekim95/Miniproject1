@@ -2,7 +2,6 @@
 
 const event = ()=> {
   window.addEventListener("click", e =>{
-    console.log(e.target);
     if(e.target.matches("#save")){
       saveEvent();
     }
@@ -19,6 +18,16 @@ const event = ()=> {
       navExpand();
     }
   })
+  window.addEventListener("mousedown", e =>{
+    if(e.target.matches("#nav-list>li")){
+      window.addEventListener("mouseup", (dest)=>{
+        if(dest.target.matches("#nav-list>li")){
+          let child = e.target.dataset.docid;
+          let parent = dest.target.dataset.docid;
+        }
+      }, {once: true});
+    }
+  });
   const writeObserver = new MutationObserver(()=>{
     const contents = document.querySelectorAll('blockquote');
     if(contents){
@@ -36,16 +45,25 @@ const event = ()=> {
 function navCollapse(){
   const navi = document.getElementById("navi");
   navi.classList.add("d-none");
-  const navExpand = document.getElementById("nav-expand");
-  navExpand.classList.remove("d-none");
-  navExpand.classList.add("d-block");
+  const navExpand = `
+  <button id="nav-expand" class="col btn btn-outline-light text-black d-block rounded border-0 position-fixed" style="font-size: small; top:10px; left:10px;">
+    <i class="fa-solid fa-angles-left" style="color: #4f4f4f; pointer-events:none; transform:scaleX(-1);"></i>
+  </button>`;
+  // 내비 닫을 때 컨텐츠 디디스플레이 크기 증가
+  const content = document.getElementById("content");
+  content.classList.remove("col-10");
+  content.classList.add("col-12");
+  content.innerHTML += navExpand;
 }
 function navExpand(){
   const navi = document.getElementById("navi");
   navi.classList.remove("d-none");
+  // 내비 열 때 컨텐츠 크기 축소소
+  const content = document.getElementById("content");
+  content.classList.remove("col-12");
+  content.classList.add("col-10");
   const navExpand = document.getElementById("nav-expand");
-  navExpand.classList.add("d-none");
-  navExpand.classList.remove("d-block");
+  content.removeChild(navExpand);
 }
 
 async function saveEvent(){
