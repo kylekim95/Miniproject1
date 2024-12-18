@@ -27,3 +27,10 @@
   height: 100vh; overflow-y: auto;
   max-width: 340px;
 }
+
+#savingStatus{color:var(--text-color);}
+.spinner-border{
+  --bs-spinner-width: 1rem;
+  --bs-spinner-height: 1rem;
+  --bs-spinner-border-width: 0.15em;
+}
