@@ -1,4 +1,5 @@
 // navi.js
+import axiosInstance from "./axiosInstance.js";
 
 window.addNewNote = async function addNewNote(parent) {
   console.log(parent);
@@ -75,16 +76,14 @@ async function render(path, query) {
         <ul class="list-unstyled ps-0" >`;
   const end = `</ul></div>`;
 
-  const response = await fetch(`https://kdt-api.fe.dev-cos.com/documents`, {
-    headers: { "x-username": "sajotuna" },
-  });
-  if (!response.ok) {
-    return header + end;
+  const response = await axiosInstance.get('/documents');
+
+  if(response.status !== 200) {
+    return header + end;    
   }
-  const data = await response.json();
 
+  const data = await response.data;
   const body = renderMenuList(path.split("/app/")[1], data).child;
-
   return header + body + end;
 }
 

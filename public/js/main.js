@@ -1,18 +1,19 @@
 // main.js
+import axiosInstance from "./axiosInstance.js";
 
 async function render(path = "", query) {
   const pathArr = path.split("/");
-  const response = await fetch(`http://localhost:3001/document/` + pathArr[2]);
+  const response = await axiosInstance.get(`/documents/${pathArr[2]}`);
   let data;
   try {
-    data = await response.json();
+    data = await response.data;
   } catch (error) {}
 
-  if (response.ok && data?.id > 0) {
+  if (response.status === 200 && data?.id > 0) {
     return body(data);
   } else {
-   const response = await fetch(`http://localhost:3001/document/`);
-   const data = await response.json();
+   const response = await axiosInstance.get('/documents');
+   const data = await response.data;
    const newId = Number(data[data.length - 1].id) + 1;
    return body({id:newId, title:"새로운 글 제목", content:"내용을 입력 바랍니다."});
   }
@@ -23,10 +24,13 @@ function body(data) {
   <div class="flex-shrink-1" >
     <div id="did" class="d-none">${data.id}</div>
     <!-- top menu -->
-    <div class="d-flex m-2">
-      <div> document > ${data.title}</div>
-      <div id="save" class="btn btn-outline-light text-black ms-auto">
-        <i class="fa-regular fa-floppy-disk"></i> 저장
+    <div class="d-flex m-2 align-items-center">
+      <div class="me-auto"> document > ${data.title}</div>
+      <div id="savingStatus" class="d-none">
+        <span class="me-1">저장 중</span>
+        <div class="spinner-border spinner-border-md cl" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
       </div>
       <div id="delete" class="btn btn-outline-light text-black me-1">
         <i class="fa-solid fa-trash"></i> 삭제
