@@ -10,13 +10,30 @@ async function render(data){
       >>
     </button>
     ${_breadcrumb}
-    <div id="save" class="btn btn-outline-light text-black ms-auto">
-      <i class="fa-regular fa-floppy-disk"></i>
+    <div id="savingStatus" class="d-none">
+      <span class="me-1">저장 중</span>
+      <div class="spinner-border spinner-border-md cl" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
     </div>
     <div id="delete" class="btn btn-outline-light text-black me-1">
       <i class="fa-solid fa-trash"></i>
     </div>
   </div>`;
 }
+
+// <!-- top menu -->
+// <div class="d-flex m-2 align-items-center">
+//   <div class="me-auto"> document > ${data.title}</div>
+//   <div id="savingStatus" class="d-none">
+//     <span class="me-1">저장 중</span>
+//     <div class="spinner-border spinner-border-md cl" role="status">
+//       <span class="visually-hidden">Loading...</span>
+//     </div>
+//   </div>
+//   <div id="delete" class="btn btn-outline-light text-black me-1">
+//     <i class="fa-solid fa-trash"></i> 삭제
+//   </div>
+// </div>
 
 export default render;
