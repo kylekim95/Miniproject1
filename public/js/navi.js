@@ -60,20 +60,16 @@ function renderMenuList(id, list) {
 }
 
 async function render(path, query) {
+  const response = await axiosInstance.get("/documents");
+  
   const header = `<div class="position-relative h-100">
-        <div class="row ">
-          <div class="col-8">
-            <div class="link-body-emphasis text-decoration-none" onclick="navigater('/');" style="cursor:pointer;">
-              <span class="fs-5 fw-semibold">userName의 노션</span>
+        <div class="d-flex justify-content-between align-items-start w-100">
+          <div class="w-80 link-body-emphasis text-decoration-none" onclick="navigater('/');" style="cursor:pointer;">
+              <span class="fs-5 fw-semibold text-break">${response.config.headers["x-username"]}의 노션</span>
             </div>
-          </div>
-          <div class="col-4">
-            <div class="row">
-              <button id="close" class="col btn btn-outline-light text-black d-block rounded border-sm ">
+          <button id="close" class="btn text-black d-block rounded border-sm pe-0 py-1">
                 <i class="fa-solid fa-angles-left" style="color: #4f4f4f; pointer-events:none"></i>
-              </button>
-            </div>
-          </div>
+          </button>
         </div>
         <hr>
         <ul class="list-unstyled ps-0" >`;
@@ -84,9 +80,7 @@ async function render(path, query) {
       </button>
     </div>
   `;
-
-  const response = await axiosInstance.get("/documents");
-
+  
   if (response.status !== 200) {
     return header + end;
   }
