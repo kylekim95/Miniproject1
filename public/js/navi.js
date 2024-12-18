@@ -28,7 +28,7 @@ function renderMenuList(id, list) {
 
     items += `<li onclick="location='/app/${
       e.id
-    }'" class="btn btn-outline-light overflow-x-hidden overflow-y-hidden text-black d-block rounded border-0 text-start d-flex justify-content-between" style="height: 30px;">
+    }'" class="item-container btn btn-outline-light overflow-x-hidden overflow-y-hidden text-black d-block rounded border-0 text-start d-flex justify-content-between pe-1" style="height: 30px;">
       <div>
         <span type="button" id="collapse" data-bs-toggle="collapse" data-bs-target='#collapse${
           e.id
@@ -37,13 +37,13 @@ function renderMenuList(id, list) {
         </span>
         ${e.title}
       </div>
-      <div class="d-flex gap-1">
-        <button class="btn btn-outline-light d-block rounded border-0 p-0" onclick="event.stopPropagation(); deleteNote(${
+      <div class="d-flex document-control-btn">
+        <button class="btn btn-outline-light d-block rounded border-0 py-0 px-1" onclick="event.stopPropagation(); deleteNote(${
           e.id
         })" style="font-size: small;">
           <i class="fa-regular fa-trash-can" style="color: #4f4f4f;"></i>
         </button>
-        <button class="btn btn-outline-light d-block rounded border-0 p-0" onclick="event.stopPropagation(); addNewNote(${
+        <button class="btn btn-outline-light d-block rounded border-0 py-0 px-1" onclick="event.stopPropagation(); addNewNote(${
           e.id
         })" style="font-size: small;">
           <i class="fa-solid fa-plus" style="color: #4f4f4f;"></i>
