@@ -40,7 +40,7 @@ async function body(data) {
       <!-- 컨텐츠 -->
       <div>
         <blockquote id="contents" class="p-1 fw-medium" contenteditable="true">
-          ${data.content ? data.content : ""}
+          <div>${data.content ? data.content : ""}</div>
         </blockquote>
         <div id="documentsList" class="d-flex flex-column gap-1">
           ${sub_posts}

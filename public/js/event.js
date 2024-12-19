@@ -13,6 +13,10 @@ const event = () => {
       navExpand();
     } else if (e.target.matches("#welcomeContents .list")) {
       window.navigater(`/app/${e.target.dataset.id}`);
+    } else if (e.target.matches(".dropdown-item")) {
+      console.log(e.target);
+      e.stopPropagation();
+      selectPage(e.target.id, e.target.innerText);
     }
   });
 
@@ -41,13 +45,41 @@ const event = () => {
   window.addEventListener("input", (e) => {
     if (e.target.matches("#title")) {
       changeTitle(e);
+    } else if (e.target.matches("#contents")) {
+      const selection = window.getSelection();
+      const dropDown = e.target.querySelector(".dropdown");
+
+      if (dropDown) {
+        const text = dropDown.querySelector("div");
+        selection.collapse(text, text.innerText.length);
+        updateDropDown(text.innerText);
+      }
     }
   });
+
   window.addEventListener("keydown", (e) => {
     if (e.target.matches("#title")) {
       if (e.key === "Enter") {
         e.preventDefault();
         document.getElementById("contents").focus();
+      }
+    } else if (e.target.matches("#contents")) {
+      if (e.key === "Spacebar" || e.key === " ") {
+        const newRange = document.getSelection();
+
+        const content = [...e.target.querySelectorAll("div")].find((c) =>
+          c.innerText.startsWith("/페이지")
+        );
+        if (content) {
+          e.preventDefault();
+          const newPage = document.createElement("div");
+          newPage.style.height = "24px";
+          content.setAttribute("class", "dropdown");
+          content.innerHTML = "";
+          content.appendChild(newPage);
+          content.innerHTML += createDropDown();
+          newRange.collapse(newPage, 0);
+        }
       }
     }
   });
@@ -72,8 +104,16 @@ const event = () => {
     const contents = document.querySelectorAll("blockquote");
     if (contents) {
       contents.forEach((content) => {
+<<<<<<< HEAD
         let prev = content.textContent; // blur 이벤트 전 텍스트 데이터
         handleBlockquote(content,prev);
+=======
+        content.addEventListener("blur", () => {
+          console.log("observing");
+          selectPage();
+          autoSaveEvent();
+        });
+>>>>>>> 6c52f9e (feat: 외부 페이지 참조 구현)
       });
     }
   });
@@ -99,7 +139,7 @@ function navCollapse() {
   navi.classList.add("d-none");
 
   let navExpand = document.getElementById("nav-expand");
-  if(!navExpand){
+  if (!navExpand) {
     let navExpandHTML = `
       <button id="nav-expand" class="col btn btn-outline-light text-black d-block rounded border-0 position-fixed" style="font-size: small; top:10px; left:10px;">
         <i class="fa-solid fa-angles-left" style="color: #4f4f4f; pointer-events:none; transform:scaleX(-1);"></i>
@@ -143,10 +183,14 @@ async function autoSaveEvent() {
     content: replaceContents,
   });
   try {
+<<<<<<< HEAD
     await axiosInstance.put(
       `/documents/${currentId}`,
       jsonData
     );
+=======
+    await axiosInstance.put(`/documents/${currentId}`, jsonData);
+>>>>>>> 6c52f9e (feat: 외부 페이지 참조 구현)
   } catch (error) {
     console.log(error);
   } finally {
@@ -154,6 +198,59 @@ async function autoSaveEvent() {
     setTimeout(() => {
       savingUI.classList.add("d-none");
     }, 600);
+  }
+}
+
+function getDropDown(allTitles) {
+  let items = "";
+  if (allTitles.length > 0) {
+    allTitles.forEach((title) => {
+      items += `<li class="dropdown-item" id="${title.id}">${title.innerHTML}</li>`;
+    });
+  } else {
+    items = `<li class="dropdown-item">no data</li>`;
+  }
+
+  return items;
+}
+
+function createDropDown() {
+  const allTitles = document.querySelectorAll(".nav-item-title");
+  const items = getDropDown(allTitles);
+
+  return `<ul class="dropdown-menu show overflow-y-scroll" style="height: 100px" contenteditable="false">${items}</ul>`;
+}
+
+function updateDropDown(keyword) {
+  const allTitles = [...document.querySelectorAll(".nav-item-title")].filter(
+    (item) => item.innerText.includes(keyword)
+  );
+  const items = getDropDown(allTitles);
+
+  const continer = document.querySelector(".dropdown-menu");
+  continer.innerHTML = items;
+}
+
+function selectPage(id = 0, text = "") {
+  const newRange = document.getSelection();
+  const dropdown = document.querySelector(".dropdown");
+  const continer = document.querySelector(".dropdown-menu");
+  const nextDiv = document.createElement("div");
+
+  continer.remove();
+
+  dropdown.style.height = "40px";
+  nextDiv.style.height = "24px";
+  dropdown.setAttribute("class", null);
+
+  if (id) {
+    dropdown.innerHTML = "";
+    dropdown.innerHTML = `<button id=${document.id} contenteditable="false" class="item-container btn btn-outline-light w-100 d-flex gap-2 align-items-center" onclick="navigater('/app/${id}');">
+      <i class="fa-regular fa-note-sticky" style="pointer-events:none;"></i>
+      <u class="link-secondary" style="pointer-events:none;">${text}</u>
+    </button>`;
+    dropdown.parentNode.appendChild(nextDiv);
+    newRange.collapse(nextDiv, 0);
   }
 }
 
