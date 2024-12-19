@@ -26,3 +26,12 @@ button#write{
   background: var(--bg-gray);
   &:hover{background:var(--bg-hover)}
 }
+
+#navi{
+  transition: all .6s ease-in-out;
+}
+#navi.slidedown{
+  margin-left: -100%;
+}
+#nav-expand{transition: all .3s ease-in-out;}
+#nav-expand.hide{opacity: 0; cursor:default;}

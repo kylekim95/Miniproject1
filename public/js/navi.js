@@ -68,7 +68,7 @@ async function render(path, query) {
               <span class="fs-5 fw-semibold text-break">${response.config.headers["x-username"]}의 노션</span>
             </div>
           <button id="close" class="btn text-black d-block rounded border-sm pe-0 py-1">
-                <i class="fa-solid fa-angles-left" style="color: #4f4f4f; pointer-events:none"></i>
+                <i class="fa-solid fa-angles-left" style="color: #4f4f4f; pointer-events:none; font-size:small;"></i>
           </button>
         </div>
         <hr>
