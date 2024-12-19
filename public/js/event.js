@@ -1,5 +1,6 @@
 // event.js
 import axiosInstance from "./axiosInstance.js";
+import matchPattern from "./matchPattern.js";
 
 const event = () => {
   window.addEventListener("click", (e) => {
@@ -50,6 +51,30 @@ const event = () => {
         document.getElementById("contents").focus();
       }
     }
+  });
+
+  let string = "";
+  window.addEventListener("keyup", (e)=>{
+    let theRealContent = document.getElementById("theRealContent");
+    let focusedElement = document.activeElement;
+    if(focusedElement.tagName !== 'BLOCKQUOTE') return;
+    string += (e.key);
+    for(let [key, values] of Object.entries(matchPattern)){
+      if(string.match(key)){
+        let createdElement = values();
+        theRealContent.appendChild(createdElement);
+        focusedElement.innerText = focusedElement.innerText.slice(0, -string.length);
+        
+        let newBlockQuote = document.createElement("blockquote");
+        newBlockQuote.classList.add("p-1", "fw-medium");
+        newBlockQuote.setAttribute("contenteditable", "true");
+        theRealContent.appendChild(newBlockQuote);
+
+        string = "";
+      }
+    }
+    if(e.key == 'Backspace' || e.key == 'Space' || e.key == 'Enter') string = "";
+    if(string.length > 10) string = "";
   });
 
   const writeObserver = new MutationObserver(() => {
