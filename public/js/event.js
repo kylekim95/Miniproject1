@@ -20,22 +20,22 @@ const event = () => {
     }
   });
 
-  window.addEventListener("mousedown", (e)=>{
-    if(e.target.matches("#resizer")) {
-      let left = document.getElementById('navi');
+  window.addEventListener("mousedown", (e) => {
+    if (e.target.matches("#resizer")) {
+      let left = document.getElementById("navi");
       e.preventDefault();
       e.stopPropagation();
-      function mousemoveHandler(e){
+      function mousemoveHandler(e) {
         let limit = Math.min(Math.max(e.clientX, 180), 360);
-        document.body.style.cursor = 'ew-resize';
-        left.style.setProperty('width', `${limit}px`);
+        document.body.style.cursor = "ew-resize";
+        left.style.setProperty("width", `${limit}px`);
         e.preventDefault();
         e.stopPropagation();
       }
       window.addEventListener("mousemove", mousemoveHandler);
-      window.addEventListener("mouseup", (e)=>{
+      window.addEventListener("mouseup", (e) => {
         window.removeEventListener("mousemove", mousemoveHandler);
-        document.body.style.removeProperty('cursor');
+        document.body.style.removeProperty("cursor");
         e.preventDefault();
         e.stopPropagation();
       });
@@ -66,6 +66,25 @@ const event = () => {
     } else if (e.target.matches("#contents")) {
       if (e.key === "Spacebar" || e.key === " ") {
         const newRange = document.getSelection();
+
+        if (newRange.focusNode.textContent.startsWith("#")) {
+          e.preventDefault();
+          const header = [...e.target.querySelectorAll("div")].find(
+            (c) =>
+              c.innerText === "#" ||
+              c.innerText === "##" ||
+              c.innerText === "###"
+          );
+
+          const newHeader = document.createElement(
+            `h${header.innerText.length}`
+          );
+          newHeader.style.height = "100%";
+          newHeader.style.padding = "5px 0 10px 0";
+          newHeader.innerHTML = "";
+          header.parentNode.replaceChild(newHeader, header);
+          newRange.collapse(newHeader, 0);
+        }
 
         const content = [...e.target.querySelectorAll("div")].find((c) =>
           c.innerText.startsWith("/페이지")
@@ -104,33 +123,26 @@ const event = () => {
     const contents = document.querySelectorAll("blockquote");
     if (contents) {
       contents.forEach((content) => {
-<<<<<<< HEAD
         let prev = content.textContent; // blur 이벤트 전 텍스트 데이터
-        handleBlockquote(content,prev);
-=======
-        content.addEventListener("blur", () => {
-          console.log("observing");
-          selectPage();
-          autoSaveEvent();
-        });
->>>>>>> 6c52f9e (feat: 외부 페이지 참조 구현)
+        handleBlockquote(content, prev);
       });
     }
   });
   writeObserver.observe(document.body, { childList: true, subtree: true });
 };
 
-function handleBlockquote (content,prev) {
+function handleBlockquote(content, prev) {
   // blur 이벤트 리스너를 한번만 등록하도록
-  if(!content.dataset.observed){
-    content.dataset.observed = 'true';
+  if (!content.dataset.observed) {
+    content.dataset.observed = "true";
     content.addEventListener("blur", () => {
       // blur 이벤트 전,후 비교
-      if(prev !== content.textContent) {
+      if (prev !== content.textContent) {
         prev = content.textContent;
+        selectPage();
         autoSaveEvent();
       }
-    })
+    });
   }
 }
 
@@ -183,14 +195,7 @@ async function autoSaveEvent() {
     content: replaceContents,
   });
   try {
-<<<<<<< HEAD
-    await axiosInstance.put(
-      `/documents/${currentId}`,
-      jsonData
-    );
-=======
     await axiosInstance.put(`/documents/${currentId}`, jsonData);
->>>>>>> 6c52f9e (feat: 외부 페이지 참조 구현)
   } catch (error) {
     console.log(error);
   } finally {
@@ -236,12 +241,14 @@ function selectPage(id = 0, text = "") {
   const dropdown = document.querySelector(".dropdown");
   const continer = document.querySelector(".dropdown-menu");
   const nextDiv = document.createElement("div");
-
-  continer.remove();
-
-  dropdown.style.height = "40px";
   nextDiv.style.height = "24px";
-  dropdown.setAttribute("class", null);
+
+  if (continer) continer.remove();
+
+  if (dropdown) {
+    dropdown.style.height = "40px";
+    dropdown.setAttribute("class", null);
+  }
 
   if (id) {
     dropdown.innerHTML = "";
