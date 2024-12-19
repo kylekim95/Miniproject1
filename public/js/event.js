@@ -124,7 +124,6 @@ const event = () => {
           header.parentNode.replaceChild(newHeader, header);
           newHeader.parentNode.appendChild(document.createElement('div'));
           newRange.collapse(newHeader.nextSibling, 0);
-          console.log(e.target);
         }
       }
     }
