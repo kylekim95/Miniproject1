@@ -148,7 +148,7 @@ function handleBlockquote(content, prev) {
 
 function navCollapse() {
   const navi = document.getElementById("navi");
-  navi.classList.add("d-none");
+  navi.classList.add("slidedown");
 
   let navExpand = document.getElementById("nav-expand");
   if (!navExpand) {
@@ -160,13 +160,15 @@ function navCollapse() {
     content.innerHTML += navExpandHTML;
   }
   navExpand = document.getElementById("nav-expand");
-  navExpand.classList.remove("d-none");
+  navExpand.classList.remove("hide");
+  navExpand.disable=false;
 }
 function navExpand() {
   const navi = document.getElementById("navi");
-  navi.classList.remove("d-none");
+  navi.classList.remove("slidedown");
   const navExpand = document.getElementById("nav-expand");
-  navExpand.classList.add("d-none");
+  navExpand.classList.add("hide");
+  navExpand.disable=true;
 }
 
 function changeTitle(e) {
