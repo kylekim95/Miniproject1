@@ -51,6 +51,22 @@ const event = () => {
       }
     }
   });
+  window.addEventListener("keydown", (e) => {
+    let editor = document.activeElement;
+    if (e.key == 'Tab' && editor.tagName == 'BLOCKQUOTE'){
+      let tabNode = document.createTextNode("\u00a0\u00a0\u00a0\u00a0");
+      let doc = editor.ownerDocument.defaultView;
+      let sel = doc.getSelection();
+      let range = sel.getRangeAt(0);
+      range.insertNode(tabNode);
+      range.setStartAfter(tabNode);
+      range.setEndAfter(tabNode); 
+      sel.removeAllRanges();
+      sel.addRange(range);
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  });
 
   const writeObserver = new MutationObserver(() => {
     const contents = document.querySelectorAll("blockquote");
