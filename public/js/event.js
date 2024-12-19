@@ -99,6 +99,32 @@ const event = () => {
           content.innerHTML += createDropDown();
           newRange.collapse(newPage, 0);
         }
+
+        if (newRange.focusNode.textContent.startsWith("-")) {
+          e.preventDefault();
+          const header = [...e.target.querySelectorAll("div")].find(
+            (c) =>
+              c.innerText === "---"
+          );
+          const newHeader = document.createElement('hr');
+          console.log(newHeader);
+          header.parentNode.replaceChild(newHeader, header);
+          newRange.collapse(newHeader, 0);
+        }
+
+        if (newRange.focusNode.textContent.startsWith("/")) {
+          e.preventDefault();
+          const header = [...e.target.querySelectorAll("div")].find(
+            (c) =>
+              c.innerText === "/ul"
+          );
+          const newHeader = document.createElement('ul');
+          const liElement = document.createElement('li');
+          liElement.setAttribute("contenteditable", "true");
+          newHeader.appendChild(liElement);
+          header.parentNode.replaceChild(newHeader, header);
+          newRange.collapse(newHeader, 0);
+        }
       }
     }
   });
