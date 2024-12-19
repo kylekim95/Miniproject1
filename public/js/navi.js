@@ -34,9 +34,13 @@ function renderMenuList(id, list) {
           e.id
         }' aria-controls='collapse${e.id}' onclick="event.stopPropagation();">
           <i class="fa-regular fa-note-sticky" style="color: #5f5e5b;"></i>
-          ${child.length > 0 ? `<i class="fa-solid fa-chevron-down" style="color: #5f5e5b; width: 14px; font-size: small;"></i>` : `<i class="fa-regular fa-note-sticky" style="color: #5f5e5b;"></i>`}
+          ${
+            child.length > 0
+              ? `<i class="fa-solid fa-chevron-down" style="color: #5f5e5b; width: 14px; font-size: small;"></i>`
+              : `<i class="fa-regular fa-note-sticky" style="color: #5f5e5b;"></i>`
+          }
         </span>
-        <span id="${e.id}">${e.title}</span>
+        <span id="${e.id}" class="nav-item-title">${e.title}</span>
       </div>
       <div class="d-flex document-control-btn">
         <button class="btn btn-outline-light d-block rounded border-0 py-0 px-1" onclick="event.stopPropagation(); deleteNote(${
