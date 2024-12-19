@@ -59,13 +59,13 @@ async function render(path, query){
         <h2 class="fw-semibold text-center mb-4">${userName}님, 안녕하세요.</h2>
         <div class="my-4">
           <p class="fs-6"><i class="bi bi-clock-history fs-6"></i> <span class="ms-1">최근 파일</span></p>
-          <div class="d-flex gap-2">
+          <div class="d-grid gap-2">
           ${
             latestDocs.map((doc, idx)=>{
               return `
               <div class="list border rounded-2 p-3 col" data-id="${doc.id}">
                   <h6 class="text-truncate">${doc.title}</h6>
-                  <blockquote class="mb-1 fs-6 fw-light lh-sm">${doc.content.slice(0, 20).trim()}</blockquote>
+                  <blockquote class="mb-1 fs-6 fw-light lh-sm">${doc.content.replace(/<[^>]+>/g,"").slice(0,500)}</blockquote>
                   <span class="updated">${updateTimeCalc(doc.updatedAt)}</span>
               </div>`
             }).join("")
