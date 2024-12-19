@@ -65,7 +65,7 @@ async function render(path, query){
               return `
               <div class="list border rounded-2 p-3 col" data-id="${doc.id}">
                   <h6 class="text-truncate">${doc.title}</h6>
-                  <p class="mb-1 fs-6 fw-light lh-sm">${doc.content}</p>
+                  <blockquote class="mb-1 fs-6 fw-light lh-sm">${doc.content.slice(0, 20).trim()}</blockquote>
                   <span class="updated">${updateTimeCalc(doc.updatedAt)}</span>
               </div>`
             }).join("")
